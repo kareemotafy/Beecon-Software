@@ -1,0 +1,10 @@
+{
+  // Allow anyone to read data, but only authenticated content owners can
+  // make changes to their data
+  "rules": {
+        ".read": true,
+        ".write": true
+  }
+}
+
+    
