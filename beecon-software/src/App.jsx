@@ -1,10 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import viteLogo from "/vite.svg";
+import database from "./firebase.js";
+import "./App.css";
+import { onValue, ref } from "firebase/database";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [humidity, setHumidity] = useState(0);
+  const [temperature, setTemperature] = useState(0);
+  const [lastCameraFrame, setLastCameraFrame] = useState(undefined);
+
+  useEffect(() => {
+    const humidityRef = ref(database, "humidity/-NrGoC9TBenvpraAS1-3");
+    onValue(humidityRef, (snapshot) => {
+      const data = snapshot.val();
+      setHumidity(data.sensorData);
+    });
+    const temperatureRef = ref(database, "temperature/-NrGoC3ej6uAGWODWpl-");
+    onValue(temperatureRef, (snapshot) => {
+      const data = snapshot.val();
+      setTemperature(data.sensorData);
+    });
+    const cameraRef = ref(database, "Camera");
+    onValue(cameraRef, (snapshot) => {
+      const data = snapshot.val();
+      const jsonData = JSON.parse(data.sensorData);
+      const base64String = jsonData.photo;
+      setLastCameraFrame("data:image/jpeg;base64," + base64String);
+    });
+  }, []);
 
   return (
     <>
@@ -12,24 +35,18 @@ function App() {
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>IOT Beehive</h1>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button style={{ margin: 5 }}>Humidity is {humidity}</button>
+        <button style={{ margin: 5 }}>Temperature is {temperature}</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="card">
+        <img src={lastCameraFrame} alt="" />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
