@@ -14,6 +14,8 @@ const watchValue = (watchValue, setter) => {
 };
 
 function Home() {
+  const [currentSoundLevel, setCurrentSoundLevel] = useState(0);
+  const [currentWeight, setCurrentWeight] = useState(0);
   const [currentHumidity, setCurrentHumidity] = useState(0);
   const [currentTemperature, setCurrentTemperature] = useState(0);
   const [lastCameraFrame, setLastCameraFrame] = useState(undefined);
@@ -31,41 +33,64 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <h1 style={{ marginTop: 20 }}>IOT Beehive</h1>
-        <div>
-          <img
-            src={BeeconLogo}
-            alt=""
-            style={{
-              width: 140,
-              height: "auto",
-              display: "block",
-              margin: "auto",
-            }}
-          />
-        </div>
+    <Grid container>
+      <Grid item xs={12} container justifyContent="center">
+        <h2 style={{ marginTop: 25 }}>
+          <span>
+            <img
+              src={BeeconLogo}
+              alt=""
+              style={{
+                width: 40,
+                height: "auto",
+                display: "block",
+                margin: "auto",
+              }}
+            />
+          </span>
+          IOT Beehive
+        </h2>
       </Grid>
-      <Grid item md={6} xs={12} container justifyContent="space-around">
+
+      <Grid
+        item
+        md={6}
+        xs={12}
+        container
+        justifyContent="space-around"
+        alignItems="center"
+      >
         {[
-          {
-            variable: currentHumidity,
-            name: "Humidity",
-          },
           {
             variable: currentTemperature,
             name: "Temperature",
+            postfix: "°C",
           },
-        ].map(({ variable, name }, index) => (
+          {
+            variable: currentHumidity,
+            name: "Humidity",
+            postfix: "%",
+          },
+          {
+            variable: currentSoundLevel,
+            name: "Sound Level",
+            postfix: "dB",
+          },
+          {
+            variable: currentWeight,
+            name: "Current Weight",
+            postfix: "g",
+          },
+        ].map(({ variable, name, postfix }, index) => (
           <Grid item xs={6} key={index}>
             <button
               onClick={() => {
                 navigate(`/${name.toLowerCase()}`);
               }}
-              style={{ margin: 5 }}
+              style={{ margin: 5, minHeight: 75 }}
             >
               {name} is: {variable}
+              {postfix}
             </button>
           </Grid>
         ))}
@@ -74,7 +99,12 @@ function Home() {
         <img
           src={lastCameraFrame}
           alt=""
-          style={{ width: "100%", maxWidth: 400, height: "auto" }}
+          style={{
+            width: "100%",
+            maxWidth: 400,
+            height: "auto",
+            marginTop: 20,
+          }}
         />
       </Grid>
     </Grid>
