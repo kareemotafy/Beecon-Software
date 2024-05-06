@@ -28,27 +28,28 @@ export default function GraphSpeedDial() {
       <SpeedDial
         ariaLabel="SpeedDial"
         sx={{
-          position: "absolute",
-          bottom: 16,
-          right: 16,
+          position: "fixed",
+          bottom: 0,
+          right: 0,
           zIndex: 1000,
+          margin: 2,
         }}
         icon={<SpeedDialIcon />}
       >
-        {actions
-          .filter(({ path }) => {
-            return path !== window.location.pathname;
-          })
-          .map((action) => (
-            <SpeedDialAction
-              onClick={() => {
-                navigate(action.path);
-              }}
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
-          ))}
+        {actions.map(({ path, name, icon }) => (
+          <SpeedDialAction
+            onClick={() => {
+              navigate(path);
+            }}
+            key={name}
+            icon={icon}
+            tooltipTitle={
+              path !== window.location.pathname
+                ? name
+                : `You are here (${name})`
+            }
+          />
+        ))}
       </SpeedDial>
     </Box>
   );
