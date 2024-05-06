@@ -4,15 +4,23 @@ from firebase_admin import firestore
 from datetime import datetime, timedelta
 import random
 
+
 # Initialize Firebase/ Firestore
 cred = credentials.Certificate("")  
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
+
+#TODO: switch to classes 
 # Variables
 warmer_months_range = [4, 9] # April to September
 humidity_soft_transition_limit = 5
 temperature_soft_transition_limit = 1
+humidity_warm_range = [80, 95]
+humidity_cold_range = [60, 75]
+temperature_warm_range = [30, 36]
+temperature_cold_range = [28, 32]
+
 
 # generating timestamps for the past year once every hour
 def generate_hourly_timestamps():
@@ -45,8 +53,9 @@ def seed_humidity_data():
     previous_humidity = 0
     sensors_ref = db.collection("sensors")
     humidity_ref = sensors_ref.document("humidity").collection("data")
+    humidity_range = [humidity_warm_range, humidity_cold_range]
     for timestamp in timestamps:
-        current_humidity = generate_values(timestamp, previous_humidity, humidity_soft_transition_limit, [[80, 95], [60, 75]]) 
+        current_humidity = generate_values(timestamp, previous_humidity, humidity_soft_transition_limit, humidity_range) 
         humidity_ref.add({
             "timestamp": timestamp,
             "value": current_humidity
@@ -57,8 +66,9 @@ def seed_temperature_data():
     previous_temperature = 0
     sensors_ref = db.collection("sensors")
     temperature_ref = sensors_ref.document("temperature").collection("data")
+    temp_range = [temperature_warm_range, temperature_cold_range]
     for timestamp in timestamps:
-        current_temperature = generate_values(timestamp, previous_temperature, temperature_soft_transition_limit, [[30, 36], [28, 32]])
+        current_temperature = generate_values(timestamp, previous_temperature, temperature_soft_transition_limit, temp_range)
         temperature_ref.add({
             "timestamp": timestamp,
             "value": current_temperature
@@ -66,7 +76,9 @@ def seed_temperature_data():
         previous_temperature = current_temperature
 
 
+#TODO: make async
 #Begin Seeder
 seed_temperature_data()
+seed_humidity_data()
 
 print("Humidity and temperature data seeded successfully!")
