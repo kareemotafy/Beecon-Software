@@ -6,9 +6,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import Home from "../pages/Home.jsx";
-import GeneralLoading from "../components/GeneralLoading.jsx";
-import GraphSpeedDial from "../components/GraphSpeedDial.jsx";
+import Home from "./pages/Home.jsx";
+import GeneralLoading from "./components/GeneralLoading.jsx";
+import GraphSpeedDial from "./components/GraphSpeedDial.jsx";
 
 const routes = [
   { path: "*", element: <h1>404</h1> },

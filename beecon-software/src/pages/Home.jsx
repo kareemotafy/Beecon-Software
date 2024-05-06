@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import database from "../util/firebase";
+import database from "../../util/firebase";
 import { onValue, ref } from "firebase/database";
 import { Hive as HiveIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
