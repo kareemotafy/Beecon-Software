@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import database from "../../util/firebase";
 import { onValue, ref } from "firebase/database";
-import { Hive as HiveIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Grid, SvgIcon } from "@mui/material";
+import { Grid } from "@mui/material";
 import BeeconLogo from "/beecon-logo.svg";
 
 const watchValue = (watchValue, setter) => {
@@ -34,7 +33,7 @@ function Home() {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <h1>IOT Beehive</h1>
+        <h1 style={{ marginTop: 20 }}>IOT Beehive</h1>
         <div>
           <img
             src={BeeconLogo}
@@ -75,7 +74,7 @@ function Home() {
         <img
           src={lastCameraFrame}
           alt=""
-          style={{ width: 400, height: "auto" }}
+          style={{ width: "100%", maxWidth: 400, height: "auto" }}
         />
       </Grid>
     </Grid>
