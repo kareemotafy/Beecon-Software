@@ -1,5 +1,0 @@
-{
-  "devDependencies": {
-    "workbox-webpack-plugin": "^7.1.0"
-  }
-}
