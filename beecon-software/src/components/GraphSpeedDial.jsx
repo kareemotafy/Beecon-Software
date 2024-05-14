@@ -18,7 +18,7 @@ const actions = [
   { icon: <DeviceThermostatIcon />, name: "Temperature", path: "/temperature" },
   { icon: <ScaleIcon />, name: "Weight", path: "/weight" },
   { icon: <HearingIcon />, name: "Sound", path: "/sound" },
-  // { icon: <PhotoCameraIcon />, name: "Camera", path: "/camera" },
+  { icon: <PhotoCameraIcon />, name: "Camera", path: "/camera" },
 ];
 
 export default function GraphSpeedDial() {

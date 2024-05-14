@@ -3,6 +3,7 @@ import database from "../../util/firebase";
 import { onValue, ref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
+import GeneralLoading from "../components/GeneralLoading";
 
 const watchValue = (watchValue, setter) => {
   const watchRef = ref(database, watchValue);
@@ -15,18 +16,13 @@ const watchValue = (watchValue, setter) => {
 function Home() {
   const [currentSoundLevel, setCurrentSoundLevel] = useState(0);
   const [currentWeight, setCurrentWeight] = useState(0);
-  const [currentHumidity, setCurrentHumidity] = useState(0);
-  const [currentTemperature, setCurrentTemperature] = useState(0);
-  const [lastCameraFrame, setLastCameraFrame] = useState(undefined);
+  const [currentHumidity, setCurrentHumidity] = useState(null);
+  const [currentTemperature, setCurrentTemperature] = useState(null);
+  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
     watchValue("humidity", setCurrentHumidity);
     watchValue("temperature", setCurrentTemperature);
-    watchValue("Camera", (data) => {
-      const jsonData = JSON.parse(data);
-      const base64String = jsonData.photo;
-      setLastCameraFrame("data:image/jpeg;base64," + base64String);
-    });
   }, []);
 
   const navigate = useNavigate();
@@ -74,23 +70,23 @@ function Home() {
               }}
               style={{ margin: 5, minHeight: 75 }}
             >
-              {name} is: {variable}
-              {postfix}
+              {typeof variable === "number" ? (
+                <>
+                  {name} is: {variable}
+                  {postfix}
+                </>
+              ) : (
+                <GeneralLoading />
+              )}
             </button>
           </Grid>
         ))}
       </Grid>
-      <Grid item md={6} xs={12}>
-        <img
-          src={lastCameraFrame}
-          alt=""
-          style={{
-            width: "100%",
-            maxWidth: 400,
-            height: "auto",
-            marginTop: 20,
-          }}
-        />
+      <Grid item md={6} xs={12} style={{ textAlign: "left" }}>
+        <div style={{ marginLeft: 10 }}>
+          <h3>Alerts:</h3>
+          {alerts?.length > 0 ? alerts.map() : "There are currently no alerts."}
+        </div>
       </Grid>
     </Grid>
   );

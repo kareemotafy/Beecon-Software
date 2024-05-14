@@ -11,6 +11,7 @@ import GeneralLoading from "./components/GeneralLoading.jsx";
 import GraphSpeedDial from "./components/GraphSpeedDial.jsx";
 import Home from "./pages/Home.jsx";
 import Temperature from "./pages/Temperature.jsx";
+import Camera from "./pages/Camera.jsx";
 
 // TODO: add lazy loading in imports
 const routes = [
@@ -19,6 +20,10 @@ const routes = [
   {
     path: "/temperature",
     element: <Temperature />,
+  },
+  {
+    path: "/camera",
+    element: <Camera />,
   },
   // {
   //   path: "/humidity",
@@ -31,10 +36,6 @@ const routes = [
   // {
   //   path: "/sound",
   //   element: React.lazy(() => import("./pages/Sound.jsx")),
-  // },
-  // {
-  //   path: "/camera",
-  //   element: React.lazy(() => import("./pages/Camera.jsx")),
   // },
 ];
 
