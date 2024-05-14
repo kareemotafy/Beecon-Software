@@ -3,7 +3,6 @@ import database from "../../util/firebase";
 import { onValue, ref } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
-import BeeconLogo from "/beecon-logo.svg";
 
 const watchValue = (watchValue, setter) => {
   const watchRef = ref(database, watchValue);
@@ -34,24 +33,6 @@ function Home() {
 
   return (
     <Grid container>
-      <Grid item xs={12} container justifyContent="center">
-        <h2 style={{ marginTop: 25 }}>
-          <span>
-            <img
-              src={BeeconLogo}
-              alt=""
-              style={{
-                width: 40,
-                height: "auto",
-                display: "block",
-                margin: "auto",
-              }}
-            />
-          </span>
-          IOT Beehive
-        </h2>
-      </Grid>
-
       <Grid
         item
         md={6}
@@ -65,27 +46,31 @@ function Home() {
             variable: currentTemperature,
             name: "Temperature",
             postfix: "°C",
+            path: "/temperature",
           },
           {
             variable: currentHumidity,
             name: "Humidity",
             postfix: "%",
+            path: "/humidity",
           },
           {
             variable: currentSoundLevel,
             name: "Sound Level",
             postfix: "dB",
+            path: "/sound",
           },
           {
             variable: currentWeight,
             name: "Current Weight",
             postfix: "g",
+            path: "/weight",
           },
-        ].map(({ variable, name, postfix }, index) => (
+        ].map(({ variable, name, postfix, path }, index) => (
           <Grid item xs={6} key={index}>
             <button
               onClick={() => {
-                navigate(`/${name.toLowerCase()}`);
+                navigate(path);
               }}
               style={{ margin: 5, minHeight: 75 }}
             >

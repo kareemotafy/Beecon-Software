@@ -6,13 +6,36 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import Home from "./pages/Home.jsx";
+import Header from "./components/Header.jsx";
 import GeneralLoading from "./components/GeneralLoading.jsx";
 import GraphSpeedDial from "./components/GraphSpeedDial.jsx";
+import Home from "./pages/Home.jsx";
+import Temperature from "./pages/Temperature.jsx";
 
+// TODO: add lazy loading in imports
 const routes = [
   { path: "*", element: <h1>404</h1> },
   { path: "/", element: <Home /> },
+  {
+    path: "/temperature",
+    element: <Temperature />,
+  },
+  // {
+  //   path: "/humidity",
+  //   element: React.lazy(() => import("./pages/Humidity.jsx")),
+  // },
+  // {
+  //   path: "/weight",
+  //   element: React.lazy(() => import("./pages/Weight.jsx")),
+  // },
+  // {
+  //   path: "/sound",
+  //   element: React.lazy(() => import("./pages/Sound.jsx")),
+  // },
+  // {
+  //   path: "/camera",
+  //   element: React.lazy(() => import("./pages/Camera.jsx")),
+  // },
 ];
 
 const generateRoutes = (routes) => {
@@ -27,6 +50,7 @@ function App() {
   return (
     <>
       <Suspense fallback={<GeneralLoading />}>
+        <Header />
         <Routes>{renderedRoutes}</Routes>
         <GraphSpeedDial />
       </Suspense>
