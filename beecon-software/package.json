@@ -16,7 +16,6 @@
     "@fontsource/roboto": "^5.0.13",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
-    "@mui/x-charts": "^7.3.2",
     "chart.js": "^4.4.2",
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^3.6.0",
