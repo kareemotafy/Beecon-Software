@@ -36,6 +36,7 @@ db = firestore.client()
 #     print("All collections cleared successfully!")
 
 #TODO: switch to classes 
+#TODO: account for hour variance in data
 # Variables
 warmer_months_range = [4, 9] # April to September
 
@@ -50,7 +51,7 @@ temperature_cold_range = [28, 32]
 weight_warm_range = [0, 13000]
 weight_cold_range = [7000, 16000]
 
-days_to_seed = 365
+days_to_seed = 30
 
 # generating timestamps for the past year once every hour
 def generate_timestamps(hour_factor = 1):

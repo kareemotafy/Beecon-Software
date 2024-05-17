@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import database from "../../util/firebase";
 import { onValue, ref } from "firebase/database";
+import { rtdbClient } from "../../util/firebase";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import GeneralLoading from "../components/GeneralLoading";
+import { convertToDb } from "../../util/tools";
 
 const watchValue = (watchValue, setter) => {
-  const watchRef = ref(database, watchValue);
+  const watchRef = ref(rtdbClient, watchValue);
   onValue(watchRef, (snapshot) => {
     const data = snapshot.val();
     setter(data.sensorData);
@@ -14,8 +15,8 @@ const watchValue = (watchValue, setter) => {
 };
 
 function Home() {
-  const [currentSoundLevel, setCurrentSoundLevel] = useState(0);
-  const [currentWeight, setCurrentWeight] = useState(0);
+  const [currentSoundLevel, setCurrentSoundLevel] = useState(null);
+  const [currentWeight, setCurrentWeight] = useState(null);
   const [currentHumidity, setCurrentHumidity] = useState(null);
   const [currentTemperature, setCurrentTemperature] = useState(null);
   const [alerts, setAlerts] = useState([]);
@@ -23,6 +24,8 @@ function Home() {
   useEffect(() => {
     watchValue("humidity", setCurrentHumidity);
     watchValue("temperature", setCurrentTemperature);
+    watchValue("sound", (val) => setCurrentSoundLevel(convertToDb(val)));
+    watchValue("weight", setCurrentWeight);
   }, []);
 
   const navigate = useNavigate();
