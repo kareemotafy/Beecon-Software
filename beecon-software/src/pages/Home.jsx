@@ -4,15 +4,7 @@ import { rtdbClient } from "../../util/firebase";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import GeneralLoading from "../components/GeneralLoading";
-import { convertToDb } from "../../util/tools";
-
-const watchValue = (watchValue, setter) => {
-  const watchRef = ref(rtdbClient, watchValue);
-  onValue(watchRef, (snapshot) => {
-    const data = snapshot.val();
-    setter(data.sensorData);
-  });
-};
+import { convertToDb, watchValue } from "../../util/tools";
 
 function Home() {
   const [currentSoundLevel, setCurrentSoundLevel] = useState(null);

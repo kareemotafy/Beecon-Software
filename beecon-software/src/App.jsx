@@ -8,13 +8,14 @@ import "@fontsource/roboto/700.css";
 
 import Header from "./components/Header.jsx";
 import GeneralLoading from "./components/GeneralLoading.jsx";
-import GraphSpeedDial from "./components/GraphSpeedDial.jsx";
+import CustomSpeedDial from "./components/CustomSpeedDial.jsx";
 import Home from "./pages/Home.jsx";
 import Camera from "./pages/Camera.jsx";
 import Temperature from "./pages/Temperature.jsx";
 // import Sound from "./pages/Sound.jsx";
 import Weight from "./pages/Weight.jsx";
 import Humidity from "./pages/Humidity.jsx";
+import Settings from "./pages/Settings.jsx";
 
 // TODO: add lazy loading in imports
 const routes = [
@@ -36,6 +37,10 @@ const routes = [
     path: "/humidity",
     element: <Humidity />,
   },
+  {
+    path: "/settings",
+    element: <Settings />,
+  },
   // {
   //   path: "/sound",
   //   element: React.lazy(() => import("./pages/Sound.jsx")),
@@ -56,7 +61,7 @@ function App() {
       <Suspense fallback={<GeneralLoading />}>
         <Header />
         <Routes>{renderedRoutes}</Routes>
-        <GraphSpeedDial />
+        <CustomSpeedDial />
       </Suspense>
     </>
   );

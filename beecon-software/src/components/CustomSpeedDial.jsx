@@ -10,6 +10,7 @@ import {
   Hearing as HearingIcon,
   Home as HomeIcon,
   PhotoCamera as PhotoCameraIcon,
+  Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 const actions = [
@@ -19,9 +20,10 @@ const actions = [
   { icon: <ScaleIcon />, name: "Weight", path: "/weight" },
   { icon: <HearingIcon />, name: "Sound", path: "/sound" },
   { icon: <PhotoCameraIcon />, name: "Camera", path: "/camera" },
+  { icon: <SettingsIcon />, name: "Settings", path: "/settings" },
 ];
 
-export default function GraphSpeedDial() {
+export default function CustomSpeedDial() {
   const navigate = useNavigate();
   return (
     <Box>
