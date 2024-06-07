@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import database from "../../util/firebase";
-import { onValue, ref } from "firebase/database";
+import { rtdbClient } from "../../util/firebase";
+import { onValue, ref as sRef } from "firebase/database";
 import { Grid } from "@mui/material";
 
 const watchValue = (watchValue, setter) => {
-  const watchRef = ref(database, watchValue);
+  const watchRef = sRef(rtdbClient, watchValue);
   onValue(watchRef, (snapshot) => {
     const data = snapshot.val();
     setter(data.sensorData);
@@ -12,7 +12,7 @@ const watchValue = (watchValue, setter) => {
 };
 
 const Camera = () => {
-  const [lastCameraFrame, setLastCameraFrame] = useState(undefined);
+  const [lastCameraFrame, setLastCameraFrame] = useState("");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
