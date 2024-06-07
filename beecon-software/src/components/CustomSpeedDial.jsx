@@ -23,7 +23,7 @@ const actions = [
   { icon: <SettingsIcon />, name: "Settings", path: "/settings" },
 ];
 
-export default function CustomSpeedDial() {
+const CustomSpeedDial = () => {
   const navigate = useNavigate();
   return (
     <Box>
@@ -55,4 +55,6 @@ export default function CustomSpeedDial() {
       </SpeedDial>
     </Box>
   );
-}
+};
+
+export default CustomSpeedDial;

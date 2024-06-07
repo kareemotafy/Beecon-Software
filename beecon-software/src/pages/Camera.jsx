@@ -37,43 +37,50 @@ const Camera = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        {lastCameraFrame ? (
-          isCameraActive ? (
-            <img
-              src={lastCameraFrame}
-              alt=""
-              style={{
-                width: "100%",
-                maxWidth: 400,
-                height: "auto",
-                marginTop: 20,
-              }}
-            />
+        <div style={{ minHeight: 345 }}>
+          {lastCameraFrame ? (
+            isCameraActive ? (
+              <img
+                src={lastCameraFrame}
+                alt=""
+                style={{
+                  backgroundColor: "#D8CBB9",
+                  borderRadius: 5,
+                  padding: 7,
+                  width: "100%",
+                  maxWidth: 400,
+                  height: "auto",
+                  marginBottom: 20,
+                }}
+              />
+            ) : (
+              <img
+                src="/StockVideo.png"
+                alt=""
+                style={{
+                  backgroundColor: "#D8CBB9",
+                  borderRadius: 5,
+                  padding: 7,
+                  width: "100%",
+                  maxWidth: 400,
+                  height: "auto",
+                  marginBottom: 20,
+                }}
+              />
+            )
           ) : (
-            <img
-              src="/StockVideo.png"
-              alt=""
-              style={{
-                width: "100%",
-                maxWidth: 300,
-                height: "auto",
-                marginTop: 20,
-              }}
-            />
-          )
-        ) : (
-          <GeneralLoading />
-        )}
+            <GeneralLoading />
+          )}
+        </div>
 
         <Grid item xs={12}>
           <IconButton
-            style={{ color: "white" }}
+            style={{ color: "white", border: "1px solid white" }}
             onClick={() => updateValue("isCameraOn", !isCameraActive)}
           >
             {isCameraActive ? <VisibilityIcon /> : <VisibilityOffIcon />}
           </IconButton>
 
-          <h2>Live Preview</h2>
           <h3>Current Time: {currentTime}</h3>
         </Grid>
       </Grid>

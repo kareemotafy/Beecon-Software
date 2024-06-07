@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import GeneralLoading from "../components/GeneralLoading";
 import { convertToDb, watchValue } from "../../util/tools";
 
-function Home() {
+const Home = () => {
   const [currentSoundLevel, setCurrentSoundLevel] = useState(null);
   const [currentWeight, setCurrentWeight] = useState(null);
   const [currentHumidity, setCurrentHumidity] = useState(null);
@@ -85,6 +85,6 @@ function Home() {
       </Grid>
     </Grid>
   );
-}
+};
 
 export default Home;
