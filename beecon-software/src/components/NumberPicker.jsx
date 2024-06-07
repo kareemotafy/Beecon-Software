@@ -18,6 +18,7 @@ const NumberPicker = ({
   handleSliderChange,
   handleInputChange,
   title,
+  helperText = "",
 }) => {
   const handleBlur = () => {
     if (value < 0) {
@@ -32,7 +33,7 @@ const NumberPicker = ({
       <Typography id="input-slider" gutterBottom>
         {title}
       </Typography>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2}>
         <Grid item>
           <Icon />
         </Grid>
@@ -59,6 +60,12 @@ const NumberPicker = ({
           />
         </Grid>
       </Grid>
+      <Typography
+        textAlign="left"
+        style={{ fontSize: 12, marginLeft: 10, color: "#A0A0A0" }}
+      >
+        {helperText}
+      </Typography>
     </Box>
   );
 };

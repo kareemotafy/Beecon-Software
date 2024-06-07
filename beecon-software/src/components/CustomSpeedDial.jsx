@@ -7,10 +7,8 @@ import {
   Water as WaterIcon,
   DeviceThermostat as DeviceThermostatIcon,
   Scale as ScaleIcon,
-  Hearing as HearingIcon,
   Home as HomeIcon,
   PhotoCamera as PhotoCameraIcon,
-  Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 const actions = [
@@ -18,9 +16,7 @@ const actions = [
   { icon: <WaterIcon />, name: "Humidity", path: "/humidity" },
   { icon: <DeviceThermostatIcon />, name: "Temperature", path: "/temperature" },
   { icon: <ScaleIcon />, name: "Weight", path: "/weight" },
-  { icon: <HearingIcon />, name: "Sound", path: "/sound" },
   { icon: <PhotoCameraIcon />, name: "Camera", path: "/camera" },
-  { icon: <SettingsIcon />, name: "Settings", path: "/settings" },
 ];
 
 const CustomSpeedDial = () => {

@@ -49,6 +49,7 @@ const Settings = () => {
             value={coolThresh}
             Icon={AcUnitIcon}
             title="Cooling Threshold"
+            helperText="Temperature at which the fan will turn on."
             handleSliderChange={(e, newValue) => {
               setCoolThresh(newValue);
             }}
@@ -64,6 +65,7 @@ const Settings = () => {
             value={heatThresh}
             Icon={LocalFireDepartmentIcon}
             title="Heating Threshold"
+            helperText="Temperature at which the heater will turn on."
             handleSliderChange={(e, newValue) => {
               setHeatThresh(newValue);
             }}
