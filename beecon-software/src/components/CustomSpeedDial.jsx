@@ -4,7 +4,7 @@ import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import {
-  Water as WaterIcon,
+  WaterDrop as WaterDropIcon,
   DeviceThermostat as DeviceThermostatIcon,
   Scale as ScaleIcon,
   Home as HomeIcon,
@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 const actions = [
   { icon: <HomeIcon />, name: "Home", path: "/" },
-  { icon: <WaterIcon />, name: "Humidity", path: "/humidity" },
+  { icon: <WaterDropIcon />, name: "Humidity", path: "/humidity" },
   { icon: <DeviceThermostatIcon />, name: "Temperature", path: "/temperature" },
   { icon: <ScaleIcon />, name: "Weight", path: "/weight" },
   { icon: <PhotoCameraIcon />, name: "Camera", path: "/camera" },

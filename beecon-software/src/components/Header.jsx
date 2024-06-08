@@ -7,7 +7,10 @@ const Header = () => {
   return (
     <Grid container>
       <Grid item xs={12} container justifyContent="center">
-        <h2 style={{ marginTop: 25 }} onClick={() => navigate("/")}>
+        <h2
+          style={{ marginTop: 25, cursor: "pointer" }}
+          onClick={() => navigate("/")}
+        >
           <span>
             <img
               src={BeeconLogo}

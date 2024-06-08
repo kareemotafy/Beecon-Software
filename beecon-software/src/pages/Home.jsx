@@ -11,6 +11,7 @@ const Home = () => {
   const [currentWeight, setCurrentWeight] = useState(null);
   const [currentHumidity, setCurrentHumidity] = useState(null);
   const [currentTemperature, setCurrentTemperature] = useState(null);
+  const [validRanges, setValidRanges] = useState({});
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,80 @@ const Home = () => {
     watchValue("temperature", setCurrentTemperature);
     watchValue("sound", (val) => setCurrentSoundLevel(convertToDb(val)));
     watchValue("weight", setCurrentWeight);
+    ["humidityAlert", "tempAlert", "soundAlert", "weightAlert"].forEach(
+      (alert) => {
+        watchValue(
+          alert,
+          (val) => {
+            setValidRanges((prev) => ({ ...prev, [alert]: val }));
+          },
+          {
+            skipPath: true,
+          }
+        );
+      }
+    );
+    updateAlerts();
   }, []);
+
+  const updateAlerts = () => {
+    const newAlerts = [];
+    const alerts = [
+      {
+        type: "humidityAlert",
+        message: "Humidity",
+        value: currentHumidity,
+        unit: "%",
+      },
+      {
+        type: "tempAlert",
+        message: "Temperature",
+        value: currentTemperature,
+        unit: "°C",
+      },
+      {
+        type: "soundAlert",
+        message: "Sound level",
+        value: currentSoundLevel,
+        unit: "dB",
+      },
+      {
+        type: "weightAlert",
+        message: "Weight",
+        value: currentWeight,
+        unit: "g",
+      },
+    ];
+
+    alerts.forEach((alert) => {
+      const range = validRanges[alert.type];
+      if (range) {
+        if (alert.value < range[0]) {
+          const difference = Math.round((range[0] - alert.value) * 100) / 100;
+          newAlerts.push(
+            `${alert.message} is below the recommended range by ${difference}${alert.unit}.`
+          );
+        } else if (alert.value > range[1]) {
+          const difference = alert.value - range[1];
+          newAlerts.push(
+            `${alert.message} is above the recommended range by ${difference}${alert.unit}.`
+          );
+        }
+      }
+    });
+
+    setAlerts(newAlerts);
+  };
+
+  useEffect(() => {
+    updateAlerts();
+  }, [
+    currentHumidity,
+    currentTemperature,
+    currentSoundLevel,
+    currentWeight,
+    validRanges,
+  ]);
 
   const navigate = useNavigate();
 
@@ -49,7 +123,6 @@ const Home = () => {
             variable: currentSoundLevel,
             name: "Sound Level",
             postfix: "dB",
-            path: "/sound",
           },
           {
             variable: currentWeight,
@@ -80,7 +153,18 @@ const Home = () => {
       <Grid item md={6} xs={12} style={{ textAlign: "left" }}>
         <div style={{ marginLeft: 10 }}>
           <h3>Alerts:</h3>
-          {alerts?.length > 0 ? alerts.map() : "There are currently no alerts."}
+
+          {alerts?.length > 0 ? (
+            <ul>
+              {alerts.map((alert, index) => (
+                <li key={index} style={{ marginBottom: 10, color: "#DC143C" }}>
+                  {alert}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            "There are currently no alerts."
+          )}
         </div>
       </Grid>
     </Grid>

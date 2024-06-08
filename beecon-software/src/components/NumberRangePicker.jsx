@@ -9,23 +9,26 @@ import MuiInput from "@mui/material/Input";
 const Input = styled(MuiInput)`
   color: white;
   border-bottom: 1px solid white;
-  max-width: 50px;
+  width: 70px;
 `;
 
-const NumberPicker = ({
+const NumberRangePicker = ({
   Icon,
   value,
   handleSliderChange,
   handleInputChange,
   title,
   helperText = "",
+  rangeMin = 0,
+  rangeMax = 100,
+  step = 1,
   endAdornment,
 }) => {
   const handleBlur = () => {
-    if (value < 0) {
-      handleSliderChange({}, 0);
-    } else if (value > 100) {
-      handleSliderChange({}, 100);
+    if (value < rangeMin) {
+      handleSliderChange({}, rangeMin);
+    } else if (value > rangeMax) {
+      handleSliderChange({}, rangeMax);
     }
   };
 
@@ -40,22 +43,40 @@ const NumberPicker = ({
         </Grid>
         <Grid item xs>
           <Slider
-            value={typeof value === "number" ? value : 0}
+            value={value}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
             valueLabelDisplay="auto"
+            step={step}
+            min={rangeMin}
+            max={rangeMax}
           />
         </Grid>
         <Grid item>
           <Input
-            value={value}
-            size="small"
-            onChange={handleInputChange}
+            value={value[0]}
+            size="medium"
+            onChange={(val) => handleInputChange(val, 0)}
+            onBlur={handleBlur}
+            style={{ marginRight: 10 }}
+            inputProps={{
+              step,
+              min: rangeMin,
+              max: rangeMax,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+            endAdornment={endAdornment}
+          />
+          <Input
+            value={value[1]}
+            size="medium"
+            onChange={(val) => handleInputChange(val, 1)}
             onBlur={handleBlur}
             inputProps={{
-              step: 1,
-              min: 0,
-              max: 100,
+              step,
+              min: rangeMin,
+              max: rangeMax,
               type: "number",
               "aria-labelledby": "input-slider",
             }}
@@ -72,4 +93,4 @@ const NumberPicker = ({
     </Box>
   );
 };
-export default NumberPicker;
+export default NumberRangePicker;
