@@ -16,6 +16,9 @@ import Temperature from "./pages/Temperature.jsx";
 import Weight from "./pages/Weight.jsx";
 import Humidity from "./pages/Humidity.jsx";
 import Settings from "./pages/Settings.jsx";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 
 // TODO: add lazy loading in imports
 const routes = [
@@ -56,13 +59,23 @@ const generateRoutes = (routes) => {
 function App() {
   const renderedRoutes = generateRoutes(routes);
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   return (
     <>
-      <Suspense fallback={<GeneralLoading />}>
-        <Header />
-        <Routes>{renderedRoutes}</Routes>
-        <CustomSpeedDial />
-      </Suspense>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={darkTheme}>
+          <Suspense fallback={<GeneralLoading />}>
+            <Header />
+            <Routes>{renderedRoutes}</Routes>
+            <CustomSpeedDial />
+          </Suspense>
+        </ThemeProvider>
+      </LocalizationProvider>
     </>
   );
 }

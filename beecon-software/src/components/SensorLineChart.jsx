@@ -19,6 +19,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../util/firebase";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 ChartJS.register(
   LineElement,
@@ -35,7 +36,6 @@ const yesterday = new Date();
 lastMonth.setMonth(lastMonth.getMonth() - 1);
 yesterday.setDate(yesterday.getDate() - 1);
 const lastMonthTimestamp = Timestamp.fromDate(lastMonth);
-const yesterdayTimestamp = Timestamp.fromDate(yesterday);
 
 const SensorLineChart = ({
   sensorLabel,
@@ -47,6 +47,7 @@ const SensorLineChart = ({
 }) => {
   const [xAxisData, setXAxisData] = useState([]);
   const [yAxisData, setYAxisData] = useState([]);
+  const [day, setDay] = useState(yesterday);
   const [filter, setFilter] = useState("day");
 
   const fetchData = async () => {
@@ -57,7 +58,7 @@ const SensorLineChart = ({
       where(
         "timestamp",
         ">=",
-        filter === "month" ? lastMonthTimestamp : yesterdayTimestamp
+        filter === "month" ? lastMonthTimestamp : Timestamp.fromDate(day)
       ),
       where("timestamp", "<=", now)
     );
@@ -91,7 +92,7 @@ const SensorLineChart = ({
 
   useEffect(() => {
     fetchData();
-  }, [filter]);
+  }, [filter, day]);
 
   const data = {
     labels: xAxisData,
@@ -182,12 +183,15 @@ const SensorLineChart = ({
         style={{ marginBottom: 10 }}
         aria-label="Filter"
       >
-        <ToggleButton style={{ color: "white" }} value="month">
-          Month
-        </ToggleButton>
-        <ToggleButton style={{ color: "white" }} value="day">
-          day
-        </ToggleButton>
+        <ToggleButton value="month">Month</ToggleButton>
+        <ToggleButton value="day">day</ToggleButton>
+        {filter === "day" && (
+          <DatePicker
+            label="Peek at"
+            value={day}
+            onChange={(newValue) => setDay(newValue)}
+          />
+        )}
       </ToggleButtonGroup>
 
       <Grid container justifyContent="center">

@@ -29,7 +29,6 @@ const Header = () => {
           style={{
             position: "absolute",
             right: 0,
-            color: "white",
           }}
           onClick={() => navigate("/settings")}
         >

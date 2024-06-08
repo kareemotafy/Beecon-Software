@@ -75,7 +75,7 @@ const Camera = () => {
 
         <Grid item xs={12}>
           <IconButton
-            style={{ color: "white", border: "1px solid white" }}
+            style={{ border: "1px solid white" }}
             onClick={() => updateValue("isCameraOn", !isCameraActive)}
           >
             {isCameraActive ? <VisibilityIcon /> : <VisibilityOffIcon />}
