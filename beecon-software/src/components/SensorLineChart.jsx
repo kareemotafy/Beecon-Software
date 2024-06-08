@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -183,8 +183,22 @@ const SensorLineChart = ({
         style={{ marginBottom: 10 }}
         aria-label="Filter"
       >
-        <ToggleButton value="month">Month</ToggleButton>
-        <ToggleButton value="day">day</ToggleButton>
+        <Button
+          style={{ minHeight: 40 }}
+          onClick={() => {
+            setFilter("month");
+          }}
+        >
+          Month
+        </Button>
+        <Button
+          style={{ minHeight: 56 }}
+          onClick={() => {
+            setFilter("day");
+          }}
+        >
+          day
+        </Button>
         {filter === "day" && (
           <DatePicker
             label="Peek at"
