@@ -23,7 +23,7 @@ const Header = () => {
               }}
             />
           </span>
-          IOT Beehive
+          BEECON
         </h2>
         <IconButton
           style={{

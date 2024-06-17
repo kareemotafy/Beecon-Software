@@ -1,8 +1,8 @@
 {
-  "name": "IOT Beecon",
-  "version": "1.0",
-  "description": "IOT Hive Monitoring System",
-  "short_name": "IOT Beecon",
+  "name": "BEECON",
+  "version": "1.1",
+  "description": "IoT Beehive Monitoring System",
+  "short_name": "BEECON",
   "start_url": "/",
   "display": "fullscreen",
   "orientation": "portrait",
