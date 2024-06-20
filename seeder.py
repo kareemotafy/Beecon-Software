@@ -7,8 +7,10 @@ import random
 from concurrent.futures import ThreadPoolExecutor
 
 
-start_time = datetime.now()
-
+current_time = datetime.now()
+start_date_str = "2024-07-30"
+start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+start_time = start_date
 cred = credentials.Certificate('./serviceAccountKey.json')
 
 # Initialize the app with a service account, granting admin privileges
@@ -51,11 +53,11 @@ temperature_cold_range = [28, 32]
 weight_warm_range = [0, 13000]
 weight_cold_range = [7000, 16000]
 
-days_to_seed = 30
+days_to_seed = 45
 
 # generating timestamps for the past year once every hour
 def generate_timestamps(hour_factor = 1):
-    now = datetime.now()
+    now = start_time
     timestamps = []
     for i in range(24*days_to_seed*hour_factor):  
         timestamp = now - timedelta(hours=i)
@@ -142,15 +144,5 @@ with ThreadPoolExecutor(max_workers=3) as executor:
 endtime = datetime.now()
 print(f"Data seeding completed! {len(hourly_timestamps) * 2 + len(every_ten_min_timestamps)} documents added to Firestore in {endtime - start_time} seconds.")
 
-
-# validate document count
-sensors_ref = db.collection("sensors")
-humidity_ref = sensors_ref.document("humidity").collection("data")
-temperature_ref = sensors_ref.document("temperature").collection("data")
-weight_ref = sensors_ref.document("weight").collection("data")
-
-print(f"Seeded {len(list(humidity_ref.stream()))} humidity entries")
-print(f"Seeded {len(list(temperature_ref.stream()))} temperature entries")
-print(f"Seeded {len(list(weight_ref.stream()))} weight entries")
 
 

@@ -53,14 +53,25 @@ const SensorLineChart = ({
   const fetchData = async () => {
     const tempRef = collection(db, "sensors", sensorVariable, "data");
 
+    const dayCloneStart = new Date(day);
+    const dayCloneEnd = new Date(day);
+
     const q = query(
       tempRef,
       where(
         "timestamp",
         ">=",
-        filter === "month" ? lastMonthTimestamp : Timestamp.fromDate(day)
+        filter === "month"
+          ? lastMonthTimestamp
+          : Timestamp.fromDate(dayCloneStart.setHours(0, 0, 0, 0))
       ),
-      where("timestamp", "<=", now)
+      where(
+        "timestamp",
+        "<=",
+        filter === "month"
+          ? lastMonthTimestamp
+          : Timestamp.fromDate(dayCloneEnd.setHours(23, 59, 59, 999))
+      )
     );
 
     const xData = [];
