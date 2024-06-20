@@ -20,6 +20,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../util/firebase";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { endOfDay, startOfDay } from "date-fns";
 
 ChartJS.register(
   LineElement,
@@ -53,8 +54,8 @@ const SensorLineChart = ({
   const fetchData = async () => {
     const tempRef = collection(db, "sensors", sensorVariable, "data");
 
-    const dayCloneStart = new Date(day);
-    const dayCloneEnd = new Date(day);
+    const dayCloneStart = startOfDay(day);
+    const dayCloneEnd = endOfDay(day);
 
     const q = query(
       tempRef,
@@ -63,14 +64,14 @@ const SensorLineChart = ({
         ">=",
         filter === "month"
           ? lastMonthTimestamp
-          : Timestamp.fromDate(dayCloneStart.setHours(0, 0, 0, 0))
+          : Timestamp.fromDate(dayCloneStart)
       ),
       where(
         "timestamp",
         "<=",
         filter === "month"
           ? lastMonthTimestamp
-          : Timestamp.fromDate(dayCloneEnd.setHours(23, 59, 59, 999))
+          : Timestamp.fromDate(dayCloneEnd)
       )
     );
 
