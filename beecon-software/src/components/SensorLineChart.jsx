@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Grid, ToggleButtonGroup } from "@mui/material";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -20,7 +20,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../util/firebase";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
 
 ChartJS.register(
   LineElement,
@@ -31,12 +31,10 @@ ChartJS.register(
   Legend
 );
 
-const now = Timestamp.now();
 const lastMonth = new Date();
 const yesterday = new Date();
 lastMonth.setMonth(lastMonth.getMonth() - 1);
 yesterday.setDate(yesterday.getDate() - 1);
-const lastMonthTimestamp = Timestamp.fromDate(lastMonth);
 
 const SensorLineChart = ({
   sensorLabel,
@@ -54,24 +52,21 @@ const SensorLineChart = ({
   const fetchData = async () => {
     const tempRef = collection(db, "sensors", sensorVariable, "data");
 
-    const dayCloneStart = startOfDay(day);
-    const dayCloneEnd = endOfDay(day);
-
     const q = query(
       tempRef,
       where(
         "timestamp",
         ">=",
         filter === "month"
-          ? lastMonthTimestamp
-          : Timestamp.fromDate(dayCloneStart)
+          ? Timestamp.fromDate(startOfMonth(lastMonth))
+          : Timestamp.fromDate(startOfDay(day))
       ),
       where(
         "timestamp",
         "<=",
         filter === "month"
-          ? lastMonthTimestamp
-          : Timestamp.fromDate(dayCloneEnd)
+          ? Timestamp.fromDate(endOfMonth(lastMonth))
+          : Timestamp.fromDate(endOfDay(day))
       )
     );
 
