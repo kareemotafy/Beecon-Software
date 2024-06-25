@@ -18,7 +18,7 @@ const Home = () => {
     watchValue("humidity", setCurrentHumidity);
     watchValue("temperature", setCurrentTemperature);
     watchValue("sound", (val) => setCurrentSoundLevel(convertToDb(val)));
-    watchValue("weight", setCurrentWeight);
+    watchValue("weight", (val) => setCurrentWeight(val > 0 ? val : 0));
     ["humidityAlert", "tempAlert", "soundAlert", "weightAlert"].forEach(
       (alert) => {
         watchValue(
